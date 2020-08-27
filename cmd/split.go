@@ -46,8 +46,8 @@ at the end.`,
 	},
 }
 
-// BasePixels is 600 x 600 pixels
-const BasePixels = 600
+// basePixels is 600 x 600 pixels
+const basePixels = 600
 
 func init() {
 	rootCmd.AddCommand(splitCmd)
@@ -60,7 +60,7 @@ func split(path string) {
 	width, height := getImageDimension(img)
 	validSize(width, height)
 
-	frames := width / BasePixels
+	frames := width / basePixels
 	log.Print("Total images: ", frames)
 
 	for frame := 0; frame < frames; frame++ {
@@ -70,7 +70,7 @@ func split(path string) {
 }
 
 func cropAndSave(imagePath string, img image.Image, frame int) {
-	cropImg := imaging.Crop(img, image.Rect(frame*BasePixels, 0, (frame+1)*BasePixels, BasePixels))
+	cropImg := imaging.Crop(img, image.Rect(frame*basePixels, 0, (frame+1)*basePixels, basePixels))
 
 	// save cropped image
 	outputPath := buildPath(imagePath, frame)
@@ -104,7 +104,7 @@ func validFormat(path string) {
 }
 
 func validSize(width int, height int) {
-	if height != BasePixels || width%BasePixels != 0 {
+	if height != basePixels || width%basePixels != 0 {
 		log.Fatal("Format not valid: ", width, height)
 	}
 }
